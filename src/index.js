@@ -30,6 +30,8 @@ app.use('*',(req, res, next)=>{
 
 // 路由
 app.use('/user',user);
-
+app.get('/abc',(req,res)=>{
+    res.send('ok');
+})
 // 开启服务
 app.listen(3000)
