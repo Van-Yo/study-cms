@@ -13,8 +13,7 @@ module.exports = {
         ],
         "no-unused-vars" : ["warn",{
             "args": "none",
-            "vars": "local",
-            "args": "none"
+            "vars": "local"
         }],
         "quotes": [
             "warn",
