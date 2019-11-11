@@ -9,7 +9,6 @@ router.post('/register',(req,res)=>{
             if(msg.length>0){
                 res.send({code:-1,msg:'该用户名已被注册'});
             }else{
-                console.log('准备去入库了');
                 return userModel.insertMany({us,ps})
             }
         })
