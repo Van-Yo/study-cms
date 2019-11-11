@@ -1,6 +1,17 @@
 const express = require('express');
 const router = express.Router();
 const userModel = require('../dbs/models/userModel');
+/**
+ * @api {post} /user/register 用户注册
+ * @apiName register
+ * @apiGroup User
+ *
+ * @apiParam {String} us 用户账号
+ * @apiParam {String} ps 用户密码
+ *
+ * @apiSuccess {Number} code 0表示成功，-1表示失败
+ * @apiSuccess {String} msg  
+ */
 router.post('/register',(req,res)=>{
     let {us,ps} = req.body;
     if(us && ps){
@@ -20,6 +31,14 @@ router.post('/register',(req,res)=>{
         })
     }
 })
+/**
+ * @api {get} /user/findAllUsers 用户查找
+ * @apiName findAllUsers
+ * @apiGroup User
+ *
+ * @apiSuccess {Number} code 0表示成功，-1表示失败
+ * @apiSuccess {Array} msg  
+ */
 router.get('/findAllUsers',(req,res)=>{
     userModel.find().then(msg=>{
         res.send(msg);
