@@ -130,7 +130,7 @@ router.post('/resetCode',(req,res)=>{
 router.post('/resetPassword',(req,res)=>{
     let {us,ps,code} = req.body;
     if(us && ps && code==resetPsCodeObj[us]){
-        userModel.update({us},{ps}).then(msg=>{
+        userModel.updateOne({us},{ps}).then(msg=>{
             if(msg.nModified==1){
                 res.send({code:0,msg:'修改成功'});
             }else{
