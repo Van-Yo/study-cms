@@ -3,6 +3,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const qs = require('querystring')
 const user = require('./routes/user')
+const book = require('./routes/book')
 const dbConnect = require('./dbs/connect');
 // 新建express服务
 const app = express()
@@ -30,5 +31,6 @@ app.use('*',(req, res, next)=>{
 
 // 路由
 app.use('/user',user);
+app.use('/book',book);
 // 开启服务
 app.listen(3000)
