@@ -4,3 +4,5 @@
 .idea
 .editorconfig
 .vscode
+/apiDoc
+apidoc.json
