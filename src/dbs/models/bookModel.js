@@ -7,7 +7,9 @@ const mongoose = require('mongoose');
 let bookSchema = new mongoose.Schema({
     name: String,
     publicDate: String,
-    price:String
+    price:String,
+    category:Number,
+    number:Number
 })
 // 3.创建Model
 let bookModel = mongoose.model('books',bookSchema);
