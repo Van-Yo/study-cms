@@ -4,6 +4,8 @@ const bodyParser = require('body-parser')
 const qs = require('querystring')
 const user = require('./routes/user')
 const book = require('./routes/book')
+const category = require('./routes/category')
+const blogList = require('./routes/blogList')
 const dbConnect = require('./dbs/connect');
 // 新建express服务
 const app = express()
@@ -32,5 +34,7 @@ app.use('*',(req, res, next)=>{
 // 路由
 app.use('/user',user);
 app.use('/book',book);
+app.use('/category',category);
+app.use('/blogList',blogList);
 // 开启服务
-app.listen(3000)
+app.listen(3100)
