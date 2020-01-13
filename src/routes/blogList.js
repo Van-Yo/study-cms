@@ -43,6 +43,26 @@ router.get('/getBlogList',(req,res)=>{
     })
 })
 /**
+ * @api {get} /book/findBook 书籍模糊查询
+ * @apiName findBook
+ * @apiGroup Book
+ *
+ * @apiParam {String} searchString 查询关键词 （必填）
+ * 
+ * @apiSuccess {Array} msg  数据信息
+ */
+router.get('/blogDetail',(req,res)=>{
+    let {_id} = req.query;
+    console.log(_id)
+    blogListModel
+    .find(
+        {_id}
+    )
+    .then(msg=>{
+        res.send(msg)
+    })
+})
+/**
  * @api {get} /book/getBookPanel 分页书籍列表
  * @apiName getBookPanel
  * @apiGroup Book
