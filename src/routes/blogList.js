@@ -2,16 +2,14 @@ const express = require('express');
 const router = express.Router();
 const blogListModel = require('../dbs/models/blogListModel');
 /**
- * @api {post} /book/addBook 新增书籍
- * @apiName addBook
- * @apiGroup Book
+ * @api {post} /blogList/addBlog 新增博客
+ * @apiName addBlog
+ * @apiGroup Blog
  *
- * @apiParam {String} name 书名 （必填）
- * @apiParam {String} publicDate 出版时间 （必填）
- * @apiParam {String} price 价格 （必填）
- * @apiParam {Number} category 分类：1文学,2数学,3英语 （必填）
- * @apiParam {Number} number 数量 （必填）
- * @apiParam {String} author 作者 （必填）
+ * @apiParam {String} title 标题 （必填）
+ * @apiParam {Nunber} category 分类 （必填）
+ * @apiParam {Nunber} hot 热度 （必填）
+ * @apiParam {String} content 内容 （必填）
  * @apiParam {String} brief 简介 （非必填）
  * @apiParam {String} date 时间 （非必填）
  *
@@ -19,7 +17,9 @@ const blogListModel = require('../dbs/models/blogListModel');
  * @apiSuccess {String} msg  信息
  */
 router.post('/addBlog',(req,res)=>{
+    console.log(req.body)
     let {title,category,hot,content,brief,date} = req.body;
+    
     if(title && category && hot && content ){
         blogListModel.insertMany({title,category,hot,content,brief:brief||'暂无简介',date}).then(msg=>{
             res.send({code:0,msg:'新增成功'});
