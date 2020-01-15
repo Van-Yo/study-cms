@@ -18,6 +18,7 @@ const blogListModel = require('../dbs/models/blogListModel');
  */
 router.post('/addBlog',(req,res)=>{
     let {title,category,hot,content,brief,date} = req.body;
+    console.log(date)
     if(title && category && hot && content ){
         blogListModel.insertMany({title,category,hot,content,brief:brief||'暂无简介',date}).then(msg=>{
             res.send({code:0,msg:'新增成功'});

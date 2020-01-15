@@ -1,3 +1,4 @@
+const moment = require('moment');
 /**
  * 创建集合
 */
@@ -10,7 +11,10 @@ let blogListSchema = new mongoose.Schema({
     hot:Number,
     content:String,
     brief:{ type: String, default: '暂无简介' },
-    date: { type: Date, default: Date.now }
+    date: {
+        type:String,
+        default:() => moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
+    }
 })
 // 3.创建Model
 let blogListModel = mongoose.model('blogLists',blogListSchema);
