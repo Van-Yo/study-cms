@@ -7,7 +7,7 @@ const mongoose = require('mongoose');
 // 2.创建Schema
 let blogListSchema = new mongoose.Schema({
     title: String,
-    category:Number,
+    category:String,
     hot:Number,
     content:String,
     brief:{ type: String, default: '暂无简介' },

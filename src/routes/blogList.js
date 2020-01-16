@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const blogListModel = require('../dbs/models/blogListModel');
+const moment = require('moment');
 /**
  * @api {post} /blogList/addBlog 新增博客
  * @apiName addBlog
@@ -127,7 +128,7 @@ router.get('/findBook',(req,res)=>{
 router.post('/updateBlog',(req,res)=>{
     let {_id,title,category,hot,content,brief,date} = req.body;
     if(_id && title && category && hot && content){
-        blogListModel.update({_id},{title,category,hot,content,brief:brief||'暂无简介',date}).then(msg => {
+        blogListModel.update({_id},{title,category,hot,content,brief:brief||'暂无简介',date:date||moment(new Date()).format('YYYY-MM-DD HH:mm:ss')}).then(msg => {
             res.send({code:0,msg:'更新成功'});
         })
     }else{
