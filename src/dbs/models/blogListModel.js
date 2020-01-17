@@ -10,6 +10,7 @@ let blogListSchema = new mongoose.Schema({
     category:String,
     hot:Number,
     content:String,
+    status:Number,
     brief:{ type: String, default: '暂无简介' },
     date: {
         type:String,

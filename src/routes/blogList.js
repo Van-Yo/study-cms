@@ -18,10 +18,10 @@ const moment = require('moment');
  * @apiSuccess {String} msg  信息
  */
 router.post('/addBlog',(req,res)=>{
-    let {title,category,hot,content,brief,date} = req.body;
+    let {title,category,hot,content,brief,date,status} = req.body;
     console.log(date)
-    if(title && category && hot && content ){
-        blogListModel.insertMany({title,category,hot,content,brief:brief||'暂无简介',date}).then(msg=>{
+    if(title && category && hot && content && status ){
+        blogListModel.insertMany({title,category,hot,content,status,brief:brief||'暂无简介',date}).then(msg=>{
             res.send({code:0,msg:'新增成功'});
         })
     }else{
@@ -29,7 +29,7 @@ router.post('/addBlog',(req,res)=>{
     }
 })
 /**
- * @api {get} /book/getBookList 书籍列表
+ * @api {get} /book/getBookList 全部博客列表
  * @apiName getBookList
  * @apiGroup Book
  *
@@ -38,6 +38,36 @@ router.post('/addBlog',(req,res)=>{
 router.get('/getBlogList',(req,res)=>{
     blogListModel
     .find()
+    .then(msg=>{
+        res.send(msg)
+    })
+})
+/**
+ * @api {get} /book/getBookList 已发布博客列表
+ * @apiName getBookList
+ * @apiGroup Book
+ *
+ * @apiSuccess {Array} msg  数据信息
+ */
+router.get('/getReleasedBlogList',(req,res)=>{
+    blogListModel
+    .find()
+    .where('status').equals(1)
+    .then(msg=>{
+        res.send(msg)
+    })
+})
+/**
+ * @api {get} /book/getBookList 待发布博客列表
+ * @apiName getBookList
+ * @apiGroup Book
+ *
+ * @apiSuccess {Array} msg  数据信息
+ */
+router.get('/getPreparedBlogList',(req,res)=>{
+    blogListModel
+    .find()
+    .where('status').equals(2)
     .then(msg=>{
         res.send(msg)
     })
@@ -53,7 +83,6 @@ router.get('/getBlogList',(req,res)=>{
  */
 router.get('/blogDetail',(req,res)=>{
     let {_id} = req.query;
-    console.log(_id)
     blogListModel
     .find(
         {_id}
@@ -91,18 +120,44 @@ router.get('/getBookPanel',(req,res)=>{
  * 
  * @apiSuccess {Array} msg  数据信息
  */
-router.get('/findBook',(req,res)=>{
+router.get('/findBlog',(req,res)=>{
     let {searchString} = req.query;
-    bookModel
+    blogListModel
     .find(
         {
             $or : [ //多条件，数组
-                {name : {$regex: searchString}},
-                {author : {$regex : searchString}},
+                {title : {$regex: searchString}},
+                {content : {$regex : searchString}},
                 {brief : {$regex : searchString}}
             ]
         }
     )
+    .then(msg=>{
+        res.send(msg)
+    })
+})
+/**
+ * @api {get} /book/findBook 书籍模糊查询
+ * @apiName findBook
+ * @apiGroup Book
+ *
+ * @apiParam {String} searchString 查询关键词 （必填）
+ * 
+ * @apiSuccess {Array} msg  数据信息
+ */
+router.get('/findBlogBySearch',(req,res)=>{
+    let {searchString,status} = req.query;
+    blogListModel
+    .find(
+        {
+            $or : [ //多条件，数组
+                {title : {$regex: searchString}},
+                {content : {$regex : searchString}},
+                {brief : {$regex : searchString}}
+            ]
+        }
+    )
+    .where('status').equals(status)
     .then(msg=>{
         res.send(msg)
     })
@@ -126,9 +181,9 @@ router.get('/findBook',(req,res)=>{
  * @apiSuccess {String} msg  信息
  */
 router.post('/updateBlog',(req,res)=>{
-    let {_id,title,category,hot,content,brief,date} = req.body;
-    if(_id && title && category && hot && content){
-        blogListModel.update({_id},{title,category,hot,content,brief:brief||'暂无简介',date:date||moment(new Date()).format('YYYY-MM-DD HH:mm:ss')}).then(msg => {
+    let {_id,title,category,hot,content,brief,date,status} = req.body;
+    if(_id && title && category && hot && content && status){
+        blogListModel.update({_id},{title,category,hot,content,status,brief:brief||'暂无简介',date:date||moment(new Date()).format('YYYY-MM-DD HH:mm:ss')}).then(msg => {
             res.send({code:0,msg:'更新成功'});
         })
     }else{
