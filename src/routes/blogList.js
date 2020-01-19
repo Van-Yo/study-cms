@@ -8,9 +8,10 @@ const moment = require('moment');
  * @apiGroup Blog
  *
  * @apiParam {String} title 标题 （必填）
- * @apiParam {Nunber} category 分类 （必填）
- * @apiParam {Nunber} hot 热度 （必填）
+ * @apiParam {String} category 分类 （必填）
+ * @apiParam {Number} hot 热度 （必填）
  * @apiParam {String} content 内容 （必填）
+ * @apiParam {Number} status 状态 （必填）
  * @apiParam {String} brief 简介 （非必填）
  * @apiParam {String} date 时间 （非必填）
  *
@@ -29,11 +30,19 @@ router.post('/addBlog',(req,res)=>{
     }
 })
 /**
- * @api {get} /book/getBookList 全部博客列表
+ * @api {get} /blogList/getBookList 全部博客列表
  * @apiName getBookList
- * @apiGroup Book
+ * @apiGroup Blog
  *
- * @apiSuccess {Array} msg  数据信息
+ * @apiSuccess {String} brief  简介
+ * @apiSuccess {String} _id  _id
+ * @apiSuccess {String} title  标题
+ * @apiSuccess {String} category  分类
+ * @apiSuccess {Number} hot  热度
+ * @apiSuccess {String} content  内容
+ * @apiSuccess {Number} status  状态，1：已发表，2暂存中
+ * @apiSuccess {String} date  发表或者最近修改日期
+ * @apiSuccess {Number} __v  无
  */
 router.get('/getBlogList',(req,res)=>{
     blogListModel
@@ -43,11 +52,19 @@ router.get('/getBlogList',(req,res)=>{
     })
 })
 /**
- * @api {get} /book/getBookList 已发布博客列表
- * @apiName getBookList
- * @apiGroup Book
+ * @api {get} /blogList/getReleasedBlogList 已发布博客列表
+ * @apiName getReleasedBlogList
+ * @apiGroup Blog
  *
- * @apiSuccess {Array} msg  数据信息
+ * @apiSuccess {String} brief  简介
+ * @apiSuccess {String} _id  _id
+ * @apiSuccess {String} title  标题
+ * @apiSuccess {String} category  分类
+ * @apiSuccess {Number} hot  热度
+ * @apiSuccess {String} content  内容
+ * @apiSuccess {Number} status  状态，1：已发表
+ * @apiSuccess {String} date  发表或者最近修改日期
+ * @apiSuccess {Number} __v  无
  */
 router.get('/getReleasedBlogList',(req,res)=>{
     blogListModel
@@ -58,11 +75,19 @@ router.get('/getReleasedBlogList',(req,res)=>{
     })
 })
 /**
- * @api {get} /book/getBookList 待发布博客列表
- * @apiName getBookList
- * @apiGroup Book
+ * @api {get} /blogList/getPreparedBlogList 待发布博客列表
+ * @apiName getPreparedBlogList
+ * @apiGroup Blog
  *
- * @apiSuccess {Array} msg  数据信息
+ * @apiSuccess {String} brief  简介
+ * @apiSuccess {String} _id  _id
+ * @apiSuccess {String} title  标题
+ * @apiSuccess {String} category  分类
+ * @apiSuccess {Number} hot  热度
+ * @apiSuccess {String} content  内容
+ * @apiSuccess {Number} status  状态，2：暂存中
+ * @apiSuccess {String} date  发表或者最近修改日期
+ * @apiSuccess {Number} __v  无
  */
 router.get('/getPreparedBlogList',(req,res)=>{
     blogListModel
@@ -73,13 +98,21 @@ router.get('/getPreparedBlogList',(req,res)=>{
     })
 })
 /**
- * @api {get} /book/findBook 书籍模糊查询
- * @apiName findBook
- * @apiGroup Book
- *
- * @apiParam {String} searchString 查询关键词 （必填）
+ * @api {get} /blogList/blogDetail 博客详情
+ * @apiName blogDetail
+ * @apiGroup Blog
  * 
- * @apiSuccess {Array} msg  数据信息
+ * @apiParam {String} _id _id （必填）
+ * 
+ * @apiSuccess {String} brief  简介
+ * @apiSuccess {String} _id  _id
+ * @apiSuccess {String} title  标题
+ * @apiSuccess {String} category  分类
+ * @apiSuccess {Number} hot  热度
+ * @apiSuccess {String} content  内容
+ * @apiSuccess {Number} status  状态，1：已发表，2暂存中
+ * @apiSuccess {String} date  发表或者最近修改日期
+ * @apiSuccess {Number} __v  无
  */
 router.get('/blogDetail',(req,res)=>{
     let {_id} = req.query;
@@ -92,33 +125,21 @@ router.get('/blogDetail',(req,res)=>{
     })
 })
 /**
- * @api {get} /book/getBookPanel 分页书籍列表
- * @apiName getBookPanel
- * @apiGroup Book
- *
- * @apiParam {String} nowPage 当前页 （非必填，默认0）
- * @apiParam {String} listNumber 每页条数 （非必填，默认10）
- * 
- * @apiSuccess {Array} msg  数据信息
- */
-router.get('/getBookPanel',(req,res)=>{
-    let {nowPage,listNumber} = req.query;
-    bookModel
-    .find()
-    .skip((parseInt(nowPage) || 0)*parseInt(listNumber))
-    .limit(parseInt(listNumber) || 10)
-    .then(msg=>{
-        res.send(msg)
-    })
-})
-/**
- * @api {get} /book/findBook 书籍模糊查询
- * @apiName findBook
- * @apiGroup Book
+ * @api {get} /blogList/findBlog 全部博客模糊查询
+ * @apiName findBlog
+ * @apiGroup Blog
  *
  * @apiParam {String} searchString 查询关键词 （必填）
  * 
- * @apiSuccess {Array} msg  数据信息
+ * @apiSuccess {String} brief  简介
+ * @apiSuccess {String} _id  _id
+ * @apiSuccess {String} title  标题
+ * @apiSuccess {String} category  分类
+ * @apiSuccess {Number} hot  热度
+ * @apiSuccess {String} content  内容
+ * @apiSuccess {Number} status  状态，1：已发表，2暂存中
+ * @apiSuccess {String} date  发表或者最近修改日期
+ * @apiSuccess {Number} __v  无
  */
 router.get('/findBlog',(req,res)=>{
     let {searchString} = req.query;
@@ -137,13 +158,22 @@ router.get('/findBlog',(req,res)=>{
     })
 })
 /**
- * @api {get} /book/findBook 书籍模糊查询
- * @apiName findBook
- * @apiGroup Book
+ * @api {get} /blogList/findBlogBySearch 模块博客模糊查询
+ * @apiName findBlogBySearch
+ * @apiGroup Blog
  *
  * @apiParam {String} searchString 查询关键词 （必填）
+ * @apiParam {Number} status 1:已发表,2:草稿 （必填）
  * 
- * @apiSuccess {Array} msg  数据信息
+ * @apiSuccess {String} brief  简介
+ * @apiSuccess {String} _id  _id
+ * @apiSuccess {String} title  标题
+ * @apiSuccess {String} category  分类
+ * @apiSuccess {Number} hot  热度
+ * @apiSuccess {String} content  内容
+ * @apiSuccess {Number} status  状态，1：已发表，2暂存中
+ * @apiSuccess {String} date  发表或者最近修改日期
+ * @apiSuccess {Number} __v  无
  */
 router.get('/findBlogBySearch',(req,res)=>{
     let {searchString,status} = req.query;
@@ -163,17 +193,16 @@ router.get('/findBlogBySearch',(req,res)=>{
     })
 })
 /**
- * @api {post} /book/updateBook 更改书籍信息
- * @apiName updateBook
- * @apiGroup Book
+ * @api {post} /blogList/updateBlog 更改博客信息
+ * @apiName updateBlog
+ * @apiGroup Blog
  *
  * @apiParam {String} _id _id （必填）
- * @apiParam {String} name 书名 （必填）
- * @apiParam {String} publicDate 出版时间 （必填）
- * @apiParam {String} price 价格 （必填）
- * @apiParam {Number} category 分类：1文学,2数学,3英语 （必填）
- * @apiParam {Number} number 数量 （必填）
- * @apiParam {String} author 作者 （必填）
+ * @apiParam {String} title 标题 （必填）
+ * @apiParam {String} category 分类 （必填）
+ * @apiParam {Number} hot 热度 （必填）
+ * @apiParam {String} content 内容 （必填）
+ * @apiParam {Number} status 状态 （必填,1表示发表，2表示暂存）
  * @apiParam {String} brief 简介 （非必填）
  * @apiParam {String} date 时间 （非必填）
  *
@@ -191,13 +220,14 @@ router.post('/updateBlog',(req,res)=>{
     }
 })
 /**
- * @api {get} /book/deleteBook 删除书籍
- * @apiName deleteBook
- * @apiGroup Book
+ * @api {get} /blogList/deleteBlog 删除博客
+ * @apiName deleteBlog
+ * @apiGroup Blog
  *
- * @apiParam {String} _id 书籍id （必填）
+ * @apiParam {String} _id 博客id （必填）
  * 
- * @apiSuccess {Array} msg  数据信息
+ * @apiSuccess {Number} code 0表示成功，-1表示失败
+ * @apiSuccess {String} msg  信息
  */
 router.get('/deleteBlog',(req,res)=>{
     let {_id} = req.query;
