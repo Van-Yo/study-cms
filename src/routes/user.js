@@ -78,7 +78,7 @@ router.post('/login',(req,res)=>{
     let {us,ps} = req.body;
     userModel.find({us,ps}).then(msg=>{
         if(msg && msg.length>0){
-            res.send({code:0,msg:'ok'});
+            res.send({code:0,msg:'ok',data:msg});
         }else{
             res.send({code:-1,msg:'no'});
         }
