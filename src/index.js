@@ -37,4 +37,4 @@ app.use('/book',book);
 app.use('/category',category);
 app.use('/blogList',blogList);
 // 开启服务
-app.listen(3100)
+app.listen(3000)
