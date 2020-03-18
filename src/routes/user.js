@@ -78,11 +78,20 @@ router.post('/login',(req,res)=>{
     let {us,ps} = req.body;
     userModel.find({us,ps}).then(msg=>{
         if(msg && msg.length>0){
+            req.session.user=msg[0];
+            req.session.save();
             res.send({code:0,msg:'ok',data:msg});
         }else{
             res.send({code:-1,msg:'no'});
         }
     })
+    // const user={
+    //     name:"Chen-xy",
+    //     age:"22",
+    //     address:"bj"
+    //    }
+    //    req.session.user=user;
+    //    res.send({code:0,msg:'已经设置好session'});
 })
 /**
  * @api {post} /user/resetCode 获取重置密码验证码

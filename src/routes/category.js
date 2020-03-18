@@ -1,6 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const categoryModel = require('../dbs/models/categoryModel');
+const checkLogin  = require('../middlewares/checklogin');
+
+// router.use(logMiddleware);
+router.use(checkLogin);
 /**
  * @api {post} /book/addBook 新增书籍
  * @apiName addBook
