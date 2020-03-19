@@ -94,6 +94,21 @@ router.post('/login',(req,res)=>{
     //    res.send({code:0,msg:'已经设置好session'});
 })
 /**
+ * @api {get} /user/logout 用户登录
+ *
+ * @apiSuccess {Number} code 0表示成功，-1表示失败
+ * @apiSuccess {String} msg  信息
+ */
+router.get('/logout',(req,res)=>{
+    req.session.user = null; // 删除session
+    if(req.session.user == null){
+        res.send({code:0,msg:'ok'});
+    }else{
+        res.send({code:-1,msg:'no'});
+    }
+    
+})
+/**
  * @api {post} /user/resetCode 获取重置密码验证码
  * @apiName resetCode
  * @apiGroup User
