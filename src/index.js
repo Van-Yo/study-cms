@@ -34,7 +34,7 @@ app.use('*',(req, res, next)=>{
     res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');//设置方法
     res.header("Access-Control-Allow-Credentials","true"); //带cookies
     if (req.method == 'OPTIONS') {
-        res.send(200); // 意思是，在正常的请求之前，会发送一个验证，是否可以请求。
+        res.sendStatus(200); // 意思是，在正常的请求之前，会发送一个验证，是否可以请求。
     }else {
         next();
     }
