@@ -85,13 +85,6 @@ router.post('/login',(req,res)=>{
             res.send({code:-1,msg:'no'});
         }
     })
-    // const user={
-    //     name:"Chen-xy",
-    //     age:"22",
-    //     address:"bj"
-    //    }
-    //    req.session.user=user;
-    //    res.send({code:0,msg:'已经设置好session'});
 })
 /**
  * @api {get} /user/logout 用户登录
