@@ -2,8 +2,11 @@ const express = require('express');
 const router = express.Router();
 const blogListModel = require('../dbs/models/blogListModel');
 const moment = require('moment');
+const logMiddleware = require('../middlewares/log');
+const checkLogin  = require('../middlewares/checklogin');
 
-
+// router.use(logMiddleware);
+router.use(checkLogin);
 /**
   * @api {post} /blogList/addBlog 新增博客
   * @apiName addBlog
@@ -108,6 +111,15 @@ router.get('/getReleasedBlogList',(req,res)=>{
     .then(msg=>{
         res.send(msg)
     })
+    // console.log(req.session)
+    // console.log(req.sessionID);
+    // if(req.session.user){
+    //     var user=req.session.user;
+    //     var name=user.us;
+    //     res.send('你好'+name+'，欢迎来到我的家园。');
+    //    }else{
+    //     res.send('你还没有登录，先登录下再试试！');
+    //    }
 })
 
 /**

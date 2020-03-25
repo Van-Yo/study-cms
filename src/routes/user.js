@@ -78,11 +78,28 @@ router.post('/login',(req,res)=>{
     let {us,ps} = req.body;
     userModel.find({us,ps}).then(msg=>{
         if(msg && msg.length>0){
+            req.session.user=msg[0];
+            req.session.save();
             res.send({code:0,msg:'ok',data:msg});
         }else{
             res.send({code:-1,msg:'no'});
         }
     })
+})
+/**
+ * @api {get} /user/logout 用户登录
+ *
+ * @apiSuccess {Number} code 0表示成功，-1表示失败
+ * @apiSuccess {String} msg  信息
+ */
+router.get('/logout',(req,res)=>{
+    req.session.user = null; // 删除session
+    if(req.session.user == null){
+        res.send({code:0,msg:'ok'});
+    }else{
+        res.send({code:-1,msg:'no'});
+    }
+    
 })
 /**
  * @api {post} /user/resetCode 获取重置密码验证码
