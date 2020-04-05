@@ -6,7 +6,7 @@ const logMiddleware = require('../middlewares/log');
 const checkLogin  = require('../middlewares/checklogin');
 
 // router.use(logMiddleware);
-router.use(checkLogin);
+// router.use(checkLogin);
 /**
   * @api {post} /blogList/addBlog 新增博客
   * @apiName addBlog
