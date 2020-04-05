@@ -28,7 +28,8 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 // CORS
 app.use('*',(req, res, next)=>{
-    res.header('Access-Control-Allow-Origin', 'http://localhost:3000'); // '*' 这个表示任意域名都可以访问，这样写不能携带cookie了。
+    res.header('Access-Control-Allow-Origin', 'http://139.224.227.52:3000');
+    // res.header('Access-Control-Allow-Origin', 'http://localhost:3000'); // '*' 这个表示任意域名都可以访问，这样写不能携带cookie了。
     //res.header('Access-Control-Allow-Origin', 'http://www.baidu.com'); //这样写，只有www.baidu.com 可以访问。
     res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild');
     res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');//设置方法
