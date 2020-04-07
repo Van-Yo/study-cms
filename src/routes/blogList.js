@@ -161,6 +161,21 @@ router.get('/getPreparedBlogList',(req,res)=>{
     })
 })
 
+router.get('/getBlogListByCategoryId',(req,res)=>{
+    let categoryList = {
+        '1': 'ReactJS',
+        '2': 'VueJS',
+        '3': 'AngularJS'
+    }
+    let {id} = req.query;
+    blogListModel
+    .find()
+    .where('category').equals(categoryList[id])
+    .then(msg=>{
+        res.send(msg)
+    })
+})
+
 /**
   * @api {get} /blogList/blogDetail 博客详情
   * @apiName blogDetail
