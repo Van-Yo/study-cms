@@ -171,4 +171,21 @@ router.get('/findAllUsers',(req,res)=>{
         res.send(msg);
     })
 })
+/**
+ * @api {get} /user/isLogin 用户是否登录
+ * @apiName isLogin
+ * @apiGroup User
+ *
+ * @apiSuccess {Number} code 0表示已登录，-1表示尚未登录
+ * @apiSuccess {Array} msg  数据信息
+ */
+router.get('/isLogin',(req,res)=>{
+    if(!req.session.user){
+        res.send({code:-99,msg:'尚未登录'});
+        return;
+    }else{
+        res.send({code:1,msg:'已登录'});
+        return;
+    }
+})
 module.exports = router
