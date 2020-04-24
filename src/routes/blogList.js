@@ -380,4 +380,39 @@ router.get('/deleteBlog',(req,res)=>{
         res.send({code:-1,msg:'删除失败'})
     })
 })
+
+// 获取博客分类信息，每个分类下有多少篇博客
+router.get('/getBlogCategoryList',(req,res)=>{
+    blogListModel
+    .find()
+    .where('status').equals(1)
+    .then(msg=>{
+ 
+        let blogNumberObj = []; 
+        // 数据按照博客名称进行归类
+        let nameContainer = {}; // 针对键name进行归类的容器
+        msg.forEach(item => {
+            nameContainer[item.category] = nameContainer[item.category] || [];  
+        
+        //当逻辑或||时，找到为true的分项就停止处理，并返回该分项的值，否则执行完，并返回最后分项的值。
+        
+            nameContainer[item.category].push(item);
+        });
+        let categoryList = Object.keys(nameContainer);
+        
+        categoryList.forEach(nameItem => {
+            let count = 0;
+            nameContainer[nameItem].forEach(item => {
+                count += 1; // 遍历每种博客中包含的条目计算总数
+            });
+            blogNumberObj.push({'name': nameItem, 'value': count});
+        });
+        res.send(
+            {
+                categoryList,
+                blogNumberObj
+            }
+        )
+    })
+})
 module.exports = router
