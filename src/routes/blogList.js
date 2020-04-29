@@ -170,6 +170,7 @@ router.get('/getBlogListByCategoryId',(req,res)=>{
     let {id} = req.query;
     blogListModel
     .find()
+    .where('status').equals(1)
     .where('category').equals(categoryList[id])
     .then(msg=>{
         res.send(msg)
