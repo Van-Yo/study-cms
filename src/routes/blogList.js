@@ -68,7 +68,8 @@ router.post('/addBlog',(req,res)=>{
   */
 router.get('/getBlogList',(req,res)=>{
     blogListModel
-    .find()
+    .find({})
+    .sort({date: -1})
     .then(msg=>{
         res.send(msg)
     })
@@ -106,8 +107,9 @@ router.get('/getBlogList',(req,res)=>{
   */
 router.get('/getReleasedBlogList',(req,res)=>{
     blogListModel
-    .find()
+    .find({})
     .where('status').equals(1)
+    .sort({date: -1})
     .then(msg=>{
         res.send(msg)
     })
@@ -154,8 +156,9 @@ router.get('/getReleasedBlogList',(req,res)=>{
   */
 router.get('/getPreparedBlogList',(req,res)=>{
     blogListModel
-    .find()
+    .find({})
     .where('status').equals(2)
+    .sort({date: -1})
     .then(msg=>{
         res.send(msg)
     })
@@ -169,9 +172,10 @@ router.get('/getBlogListByCategoryId',(req,res)=>{
     }
     let {id} = req.query;
     blogListModel
-    .find()
+    .find({})
     .where('status').equals(1)
     .where('category').equals(categoryList[id])
+    .sort({date: -1})
     .then(msg=>{
         res.send(msg)
     })

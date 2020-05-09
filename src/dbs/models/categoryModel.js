@@ -6,7 +6,8 @@ const mongoose = require('mongoose');
 // 2.创建Schema
 let categorySchema = new mongoose.Schema({
     name: String,
-    id:Number
+    id:Number,
+    imgSrc: String
 })
 // 3.创建Model
 let categoryModel = mongoose.model('categorys',categorySchema);
