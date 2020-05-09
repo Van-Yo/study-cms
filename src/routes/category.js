@@ -23,9 +23,9 @@ const checkLogin  = require('../middlewares/checklogin');
  * @apiSuccess {String} msg  信息
  */
 router.post('/addCategory',(req,res)=>{
-    let {name,id} = req.body;
-    if(name && id){
-        categoryModel.insertMany({name,id}).then(msg=>{
+    let {name,id,imgSrc} = req.body;
+    if(name && id && imgSrc){
+        categoryModel.insertMany({name,id,imgSrc}).then(msg=>{
             res.send({code:0,msg:'新增成功'});
         })
     }else{
@@ -66,9 +66,9 @@ router.get('/getCategoryList',(req,res)=>{
  * @apiSuccess {String} msg  信息
  */
 router.post('/updateCategory',(req,res)=>{
-    let {_id,name,id} = req.body;
-    if(_id && name && id){
-        categoryModel.update({_id},{name,id}).then(msg => {
+    let {_id,name,id,imgSrc} = req.body;
+    if(_id && name && id && imgSrc){
+        categoryModel.update({_id},{name,id,imgSrc}).then(msg => {
             res.send({code:0,msg:'更新成功'});
         })
     }else{
