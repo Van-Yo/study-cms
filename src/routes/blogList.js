@@ -420,4 +420,29 @@ router.get('/getBlogCategoryList',(req,res)=>{
         )
     })
 })
+// 获取博客发表信息，每个月发表了多少篇博客（所有年月）
+router.get('/getReleasedBlogNumberByMonth',(req,res)=>{
+    blogListModel
+    .find({})
+    .where('status').equals(1)
+    .then(msg=>{
+        let monthList = [];
+        msg.forEach(item=>{
+            let month = new Date(item.date).getMonth();
+            monthList.push(month);
+        })
+        let newMonthList = [];
+        let todayMonth = new Date().getMonth() + 1;
+        for(let i=0;i<todayMonth;i++){
+            newMonthList[i] = 0;
+            for(let j=0;j<monthList.length;j++){
+                if(i==monthList[j]){
+                    newMonthList[i]++;
+                }
+            }
+        }
+        res.send(newMonthList)
+    })
+    
+})
 module.exports = router
